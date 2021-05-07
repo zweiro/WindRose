@@ -4,6 +4,8 @@
     import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 
+	import WrAxis from "./WrAxis.svelte";
+
 	import {
 		ANGLE_OFFSET,
 		HEIGHT,
@@ -13,20 +15,12 @@
 		CHART_HEIGHT,
 		INNER_RADIUS,
 		OUTER_RADIUS,
-		data
+		data,
+		y,
+		x,
+		colorScale,
+		AXES_ANGLES
 	} from './utils'
-	
-
-	let y = d3
-		.scaleLinear()
-		.range([INNER_RADIUS, OUTER_RADIUS])  // display size (ex. pixels)
-		.domain([0, d3.max(data, (d) => d.total)]); // Domain of data (min and max)
-
-	let x = d3
-		.scaleBand() // Split x size by range size
-		.range([0, 2 * Math.PI]) // display size (ex. pixels)
-		.domain(data.map((d) => d.angle)) // Domain of data (min and max)
-		.align(0);
 
 	let makeArc = d3
 		.arc()
@@ -73,10 +67,6 @@
 			)
 			.append("text");
 
-	let colorScale = d3.scaleOrdinal()
-		.domain(data.columns.slice(1))
-		.range(d3.schemeBlues[data.columns.length-1]); // nr of wind velocity 'bins' 
-
 	let	yAxis = g => g.append("g")
       .attr("class", "yAxis")
       .selectAll("g")
@@ -96,24 +86,11 @@
 			.attr("font-family", "sans-serif");
 
 		const g = svg
-			.append("g")
+			.select("g")
+			.attr("class","graph")
 			.attr("transform", `translate(${WIDTH / 2},${HEIGHT / 2})`);
 
 		const stackedData = d3.stack().keys(data.columns.slice(1))(data);
-
-		g.append("g")
-			.attr("class", "axes")
-			.selectAll(".axis")
-			.data(d3.range(0, 360, 360 / data.length))
-			.join("g")
-			.attr("class", "axis")
-			.attr("transform", (d) => `rotate(${d - 90})`)
-			.append("line")
-			.attr("x1", INNER_RADIUS)
-			.attr("x2", y(y.ticks(5).reverse()[0])) // to the last tick circle
-			.attr("fill", "none")
-			.attr("stroke", "gray")
-			.attr("stroke-dasharray", "1,4");
 
 		g.append("g")
 			.attr("class", "rings")
@@ -165,7 +142,15 @@
 	});
 </script>
 
-<svg class="windrose" />
+<svg class="windrose">
+	<g class="graph">
+		<g class="axes">
+			{#each AXES_ANGLES as d}
+			  <WrAxis angle={d}/>
+			{/each}
+		</g>
+	</g>
+</svg>
 
 <style>
 	

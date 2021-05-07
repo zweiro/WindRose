@@ -39,3 +39,20 @@ export const data = Object.assign(
     }),
     { unit: "km/h" }
 );
+
+export const y = d3
+    .scaleLinear()
+    .range([INNER_RADIUS, OUTER_RADIUS])  // display size (ex. pixels)
+    .domain([0, d3.max(data, (d) => d.total)]); // Domain of data (min and max)
+
+export const x = d3
+		.scaleBand() // Split x size by range size
+		.range([0, 2 * Math.PI]) // display size (ex. pixels)
+		.domain(data.map((d) => d.angle)) // Domain of data (min and max)
+		.align(0);
+
+export const colorScale = d3.scaleOrdinal()
+		.domain(data.columns.slice(1))
+		.range(d3.schemeBlues[data.columns.length-1]); // nr of wind velocity 'bins'
+
+export const AXES_ANGLES = d3.range(0, 360, 360 / data.length);
