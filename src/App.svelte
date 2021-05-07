@@ -4,6 +4,7 @@
 
 <main>
 	<div class="wr-chart">
+		<h1>Wind Rose</h1>
 		<WindRose/>
 	</div>
 </main>
@@ -12,16 +13,10 @@
 	main {
 		text-align: center;
 		padding: 1em;
-		max-width: 240px;
 		margin: 0 auto;
 	}
 	.wr-chart {
 		max-width:70%;
 		margin: auto;
-	}
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
 	}
 </style>
