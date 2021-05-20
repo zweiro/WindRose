@@ -45,11 +45,6 @@ export const scaleAxis = d3
     .range([INNER_RADIUS, OUTER_RADIUS])  // display size (ex. pixels)
     .domain([0, d3.max(data, (d) => d.total)]); // Domain of data (min and max)
 
-export const y = d3
-    .scaleLinear()
-    .range([INNER_RADIUS, OUTER_RADIUS])  // display size (ex. pixels)
-    .domain([0, d3.max(data, (d) => d.total)]); // Domain of data (min and max)
-
 export const x = d3
 		.scaleBand() // Split x size by range size
 		.range([0, 2 * Math.PI]) // display size (ex. pixels)
