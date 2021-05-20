@@ -5,6 +5,7 @@
 	import { cubicOut } from 'svelte/easing';
 
 	import WrAxis from "./WrAxis.svelte";
+	import WrRings from "./WrRings.svelte";
 
 	import {
 		ANGLE_OFFSET,
@@ -16,21 +17,12 @@
 		INNER_RADIUS,
 		OUTER_RADIUS,
 		data,
-		y,
+		scaleAxis,
 		x,
 		colorScale,
-		AXES_ANGLES
+		AXES_ANGLES,
+		stackedData
 	} from './utils'
-
-	let makeArc = d3
-		.arc()
-		.innerRadius((d) => y(d[0]))
-		.outerRadius((d) => y(d[1]))
-		.startAngle((d) => x(d.data.angle))
-		.endAngle((d) => x(d.data.angle) + x.bandwidth())
-		.padAngle(0.02)
-		.padRadius(INNER_RADIUS);
-
 	let addLegend = (g) =>
 		g
 			.append("g")
@@ -70,13 +62,13 @@
 	let	yAxis = g => g.append("g")
       .attr("class", "yAxis")
       .selectAll("g")
-      .data(y.ticks(5)) // .slice(1) to skip 0
+      .data(scaleAxis.ticks(5)) // .slice(1) to skip 0
       .join("g")
       .call(g => g.append("circle")
         .attr("fill", "none")
         .attr("stroke", "gray")
         .attr("stroke-dasharray", "4,4")
-        .attr("r", y)
+        .attr("r", scaleAxis)
       )
 
 	onMount(() => {
@@ -89,23 +81,6 @@
 			.select("g")
 			.attr("class","graph")
 			.attr("transform", `translate(${WIDTH / 2},${HEIGHT / 2})`);
-
-		const stackedData = d3.stack().keys(data.columns.slice(1))(data);
-
-		g.append("g")
-			.attr("class", "rings")
-			.selectAll(".ring")
-			.data(stackedData)
-			.join((enter) =>
-				enter
-					.append("g")
-					.attr("fill", (d) => colorScale(d.key))
-					.selectAll("path")
-					.data((d) => d)
-					.join("path")
-					.attr("d", makeArc)
-					.attr("transform", `rotate(${ANGLE_OFFSET/2})`)
-			);
 
 		const label = g
 			.append("g")
@@ -147,6 +122,11 @@
 		<g class="axes">
 			{#each AXES_ANGLES as d}
 			  <WrAxis angle={d}/>
+			{/each}
+		</g>
+		<g class="rings">
+			{#each stackedData as d}
+			  <WrRings data={d}/>
 			{/each}
 		</g>
 	</g>

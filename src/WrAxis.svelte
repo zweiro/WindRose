@@ -1,7 +1,7 @@
 <script>
     import {
 		INNER_RADIUS,
-		y,
+		scaleAxis,
 	} from './utils'
 
     export let angle;
@@ -11,7 +11,7 @@
 <g class="axis" transform="rotate({angle - 90})">
     <line
         x1={INNER_RADIUS}
-        x2={y(y.ticks(5).reverse()[0])}
+        x2={scaleAxis(scaleAxis.ticks(5).reverse()[0])}
         fill="none"
         style="stroke:gray;stroke-dasharray:1,4"
     />

@@ -40,6 +40,11 @@ export const data = Object.assign(
     { unit: "km/h" }
 );
 
+export const scaleAxis = d3
+    .scaleLinear()
+    .range([INNER_RADIUS, OUTER_RADIUS])  // display size (ex. pixels)
+    .domain([0, d3.max(data, (d) => d.total)]); // Domain of data (min and max)
+
 export const y = d3
     .scaleLinear()
     .range([INNER_RADIUS, OUTER_RADIUS])  // display size (ex. pixels)
@@ -56,3 +61,5 @@ export const colorScale = d3.scaleOrdinal()
 		.range(d3.schemeBlues[data.columns.length-1]); // nr of wind velocity 'bins'
 
 export const AXES_ANGLES = d3.range(0, 360, 360 / data.length);
+
+export const stackedData = d3.stack().keys(data.columns.slice(1))(data);
