@@ -1,8 +1,6 @@
 <script>
 	import * as d3 from "d3";
 	import { onMount } from "svelte";
-    import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
 
 	import WrAxis from "./WrAxis.svelte";
 	import WrRings from "./WrRings.svelte";
@@ -70,6 +68,8 @@
         .attr("stroke-dasharray", "4,4")
         .attr("r", scaleAxis)
       )
+
+	console.log(data);
 
 	onMount(() => {
 		const svg = d3

@@ -9,7 +9,7 @@
 
 
 <g fill="{colorScale(data.key)}">
-    {#each data as d}
-        <WrArc arcData={d}/>
+    {#each data as d, key}
+        <WrArc arcData={d} index={key}/>
     {/each}
 </g>

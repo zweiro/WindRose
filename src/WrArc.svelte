@@ -2,7 +2,7 @@
     import * as d3 from "d3";
     import { onMount } from 'svelte';
     import { tweened } from 'svelte/motion';
-    import { cubicOut } from 'svelte/easing';
+    import { elasticOut } from 'svelte/easing';
     
     
     import {
@@ -14,13 +14,13 @@
     } from './utils'
     
     export let arcData;
+    export let index;
 
-    let progress = tweened(0, {
-        duration: 2000,
-        easing: cubicOut
+    let progress = tweened(INNER_RADIUS, {
+        delay: index*100,
+        duration: 1500,
+        easing: elasticOut
     });
-
-    console.log(arcData[1]);
 
     $: makeArc = d3
     .arc()

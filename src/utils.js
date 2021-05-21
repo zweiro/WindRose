@@ -53,7 +53,7 @@ export const x = d3
 
 export const colorScale = d3.scaleOrdinal()
 		.domain(data.columns.slice(1))
-		.range(d3.schemeBlues[data.columns.length-1]); // nr of wind velocity 'bins'
+		.range(d3.schemeYlOrRd[data.columns.length-1]); // nr of wind velocity 'bins'
 
 export const AXES_ANGLES = d3.range(0, 360, 360 / data.length);
 
