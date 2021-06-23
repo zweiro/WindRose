@@ -133,5 +133,4 @@
 </svg>
 
 <style>
-	
 </style>
