@@ -1,5 +1,13 @@
 <script>
   import WindRose from './WindRose.svelte';
+  import RangeSlider from "svelte-range-slider-pips";
+
+  const dates = ['12.06.2021','13.06.2021','14.06.2021'];
+
+  const numToDate = num => {
+	return dates[num];
+  };
+
 </script>
 
 <header>
@@ -7,13 +15,22 @@
   	<h2 class="main-title">My Weather Station</h2>
 </header>
 <main>
-<h2>Wind</h2>
-  <div class="wr-chart">
-    <WindRose/>
-  </div>
+	<div>
+		<h2>Wind</h2>
+		<div class="wr-chart">
+		<WindRose/>
+		</div>
+	</div>
+	<div class="settings">
+		<h2>Settings</h2>
+		<RangeSlider min="0" max="2" step="1" float="true" pushy="true" formatter={v => numToDate(v)}/>
+	</div>
 </main>
 
 <style>
+	.settings{
+		margin-left: 40px;
+	}
 	h2 {
 		text-align: left;
 		margin-left: 40px;
@@ -30,19 +47,20 @@
 	height: 60px;
   }
   header {
-	  display: flex;
+	display: flex;
     height: 80px;
     top:0px;
     background-color: #006BA6;
   }
   main {
+	display: flex;
     text-align: center;
     padding: 1em;
     margin: 0 auto;
   }
   .wr-chart {
-    max-width:50%;
+    width:600px;
+	margin-left: -40px;
 	margin-top: -60px;
-	margin-left: -60px;
   }
 </style>
