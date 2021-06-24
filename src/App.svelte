@@ -2,9 +2,9 @@
   import WindRose from './WindRose.svelte';
   import RangeSlider from "svelte-range-slider-pips";
 
-  const dates = ['12.06.2021','13.06.2021','14.06.2021'];
+  const dates = ['04.05.2021','05.05.2021','06.05.2021'];
 
-  const numToDate = num => {
+const numToDate = num => {
 	return dates[num];
   };
 

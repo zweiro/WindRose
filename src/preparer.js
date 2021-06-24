@@ -1,6 +1,7 @@
 const data = require('./api.php.json')
 
-const wind = d => d.CREATED.includes("2021-05-06")
+
+const wind = d => d.CREATED.includes("2021-05-04")
 
     /**
      * meteo array wind 
@@ -27,13 +28,13 @@ let meteo = {N:     [0,0,0,0,0,0,0,0,0],
              SE:    [0,0,0,0,0,0,0,0,0], 
              SSE:   [0,0,0,0,0,0,0,0,0], 
              S:     [0,0,0,0,0,0,0,0,0],
-             SSO:   [0,0,0,0,0,0,0,0,0],
-             SO:    [0,0,0,0,0,0,0,0,0],
-             OSO:   [0,0,0,0,0,0,0,0,0],
-             O:     [0,0,0,0,0,0,0,0,0],   
-             ONO:   [0,0,0,0,0,0,0,0,0],
-             NO:    [0,0,0,0,0,0,0,0,0],
-             NNO:   [0,0,0,0,0,0,0,0,0] 
+             SSW:   [0,0,0,0,0,0,0,0,0],
+             SW:    [0,0,0,0,0,0,0,0,0],
+             WSW:   [0,0,0,0,0,0,0,0,0],
+             W:     [0,0,0,0,0,0,0,0,0],   
+             WNW:   [0,0,0,0,0,0,0,0,0],
+             NW:    [0,0,0,0,0,0,0,0,0],
+             NNW:   [0,0,0,0,0,0,0,0,0] 
                }
 
 
@@ -73,25 +74,25 @@ resultats.forEach(element => {
         meteo.S[sortBySpeed(element.vitesse)] += 1;
     }
     if (element.direction >= 191.25 && element.direction <= 213.75) {
-        meteo.SSO[sortBySpeed(element.vitesse)] += 1;
+        meteo.SSW[sortBySpeed(element.vitesse)] += 1;
     }
     if (element.direction >= 213.75 && element.direction <= 236.25) {
-        meteo.SO[sortBySpeed(element.vitesse)] += 1;
+        meteo.SW[sortBySpeed(element.vitesse)] += 1;
     }
     if (element.direction >= 236.25 && element.direction <= 258.75) {
-        meteo.OSO[sortBySpeed(element.vitesse)] += 1;
+        meteo.WSW[sortBySpeed(element.vitesse)] += 1;
     }
     if (element.direction >= 258.75 && element.direction <= 281.25) {
-        meteo.O[sortBySpeed(element.vitesse)] += 1;
+        meteo.W[sortBySpeed(element.vitesse)] += 1;
     }
     if (element.direction >= 281.25 && element.direction <= 303.75) {
-        meteo.ONO[sortBySpeed(element.vitesse)] += 1;
+        meteo.WNW[sortBySpeed(element.vitesse)] += 1;
     }
     if (element.direction >= 303.75 && element.direction <= 326.25) {
-        meteo.NO[sortBySpeed(element.vitesse)] += 1;
+        meteo.NW[sortBySpeed(element.vitesse)] += 1;
     }
     if (element.direction >= 326.25 && element.direction <= 348.75) {
-        meteo.NNO[sortBySpeed(element.vitesse)] += 1;
+        meteo.NNW[sortBySpeed(element.vitesse)] += 1;
     }
     if (element.direction >= 348.75 && element.direction <= 360) {
         meteo.N[sortBySpeed(element.vitesse)] += 1;
@@ -100,9 +101,9 @@ resultats.forEach(element => {
 });
 
 
+// console.log(JSON.stringify(meteo));
 
-// console.log(JSON.stringify(resultats))
-console.log(JSON.stringify(meteo));
+toCsv(meteo);
 
 function sortBySpeed(vitesse) {
 
@@ -135,3 +136,16 @@ function sortBySpeed(vitesse) {
     }
     
 }
+
+function toCsv(data){
+    let csvContent = "angle,0 to 2,2 to 4,4 to 6,6 to 8,8 to 10,10 to 12,12 to 14,14 to 16,16 to 18\r\n";
+
+    Object.entries(data).forEach(([key, value]) => {
+        let row = value.join(",");
+        csvContent += key + "," + row + "\r\n";
+    });
+
+    console.log(csvContent);
+}
+
+    

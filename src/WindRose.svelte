@@ -69,7 +69,7 @@
         .attr("r", scaleAxis)
       )
 
-	console.log(data);
+	// console.log(data);
 
 	onMount(() => {
 		const svg = d3
