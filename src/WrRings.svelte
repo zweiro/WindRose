@@ -4,12 +4,13 @@
     import {colorScale} from './utils'
 
     export let data;
+    export let dateIndex;
 </script>
 
 
 
-<g fill="{colorScale(data.key)}">
+<g fill="{colorScale(dateIndex)(data.key)}">
     {#each data as d, key}
-        <WrArc arcData={d} index={key}/>
+        <WrArc arcData={d} dateIndex={dateIndex} index={key}/>
     {/each}
 </g>

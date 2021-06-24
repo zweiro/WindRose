@@ -4,8 +4,8 @@
 
   const dates = ['04.05.2021','05.05.2021','06.05.2021'];
 
-const numToDate = num => {
-	return dates[num];
+  const numToDate = num => {
+	  return dates[num];
   };
 
 </script>
@@ -16,14 +16,15 @@ const numToDate = num => {
 </header>
 <main>
 	<div>
-		<h2>Wind</h2>
+		<h2 id="wind-title">Wind</h2>
 		<div class="wr-chart">
-		<WindRose/>
+		<WindRose dateIndex=3/>
 		</div>
 	</div>
 	<div class="settings">
 		<h2>Settings</h2>
-		<RangeSlider min="0" max="2" step="1" float="true" pushy="true" formatter={v => numToDate(v)}/>
+		<p>Select the date:</p>
+    <RangeSlider min="0" max="2" step="1" float="true" pushy="true" formatter={v => numToDate(v)}/>
 	</div>
 </main>
 
@@ -31,7 +32,7 @@ const numToDate = num => {
 	.settings{
 		margin-left: 40px;
 	}
-	h2 {
+	#wind-title {
 		text-align: left;
 		margin-left: 40px;
 	}

@@ -9,12 +9,13 @@
         ANGLE_OFFSET,
         INNER_RADIUS,
         OUTER_RADIUS,
-        data,
+        getData,
         x,
     } from './utils'
     
     export let arcData;
     export let index;
+    export let dateIndex;
 
     let progress = tweened(INNER_RADIUS, {
         delay: index*100,
@@ -26,8 +27,8 @@
     .arc()
     .innerRadius((d) => y(d[0]))
     .outerRadius((d) => y(d[1]))
-    .startAngle((d) => x(d.data.angle))
-    .endAngle((d) => x(d.data.angle) + x.bandwidth())
+    .startAngle((d) => x(dateIndex)(d.data.angle))
+    .endAngle((d) => x(dateIndex)(d.data.angle) + x(dateIndex).bandwidth())
     .padAngle(0.02)
     .padRadius(INNER_RADIUS);
     
@@ -35,7 +36,7 @@
     $: y = d3
     .scaleLinear()
     .range([INNER_RADIUS, $progress])  // display size (ex. pixels)
-    .domain([0, d3.max(data, (d) => d.total)]); // Domain of data (min and max)
+    .domain([0, d3.max(getData(dateIndex), (d) => d.total)]); // Domain of data (min and max)
 
     onMount(() => {
         $progress = OUTER_RADIUS;

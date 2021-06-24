@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { select } from "d3";
 
 
 export const ANGLE_OFFSET = -22.5;
@@ -84,41 +85,47 @@ NW,0.0,0.0,1.0,5.0,3.0,0.0,0.0,0.0,0.0
 NNW,0.0,0.0,2.0,5.0,1.0,0.0,0.0,0.0,0.0`;
 
 let selection = [dayOne, dayTwo, dayThree, fixedData];
-
 let selectedData = selection[1];
 
+export const getData = id => {
+    let data = Object.assign(
+        d3.csvParse(selection[id], (d, i, columns) => {
+            let t = 0;
+            for (let i = 1; i < columns.length; ++i) {
+                const columnName = columns[i];
+                t += +d[columnName];
+            }
+            d.total = t;
+            return d;
+        }),
+        { unit: "km/h" });
 
+    return data;
+};
 
-
-export const data = Object.assign(
-    d3.csvParse(selectedData, (d, i, columns) => {
-        let t = 0;
-        for (let i = 1; i < columns.length; ++i) {
-            const columnName = columns[i];
-            t += +d[columnName];
-        }
-        d.total = t;
-        return d;
-    }),
-    { unit: "km/h" }
-);
-
-
-export const scaleAxis = d3
-    .scaleLinear()
+export const scaleAxis = id => {
+    return d3.scaleLinear()
     .range([INNER_RADIUS, OUTER_RADIUS])  // display size (ex. pixels)
-    .domain([0, d3.max(data, (d) => d.total)]); // Domain of data (min and max)
+    .domain([0, d3.max(getData(id), (d) => d.total)]); // Domain of data (min and max)
+}
 
-export const x = d3
-		.scaleBand() // Split x size by range size
+export const x = id => {
+    return d3.scaleBand() // Split x size by range size
 		.range([0, 2 * Math.PI]) // display size (ex. pixels)
-		.domain(data.map((d) => d.angle)) // Domain of data (min and max)
+		.domain(getData(id).map((d) => d.angle)) // Domain of data (min and max)
 		.align(0);
+}
 
-export const colorScale = d3.scaleOrdinal()
-		.domain(data.columns.slice(1))
-		.range(d3.schemeOranges[data.columns.length-1]); // nr of wind velocity 'bins'
+export const colorScale = id => {
+        return d3.scaleOrdinal()
+		.domain(getData(id).columns.slice(1))
+		.range(d3.schemeOranges[getData(id).columns.length-1]); // nr of wind velocity 'bins'
+}
 
-export const AXES_ANGLES = d3.range(0, 360, 360 / data.length);
+export const getAxesAngles = id => {
+    return d3.range(0, 360, 360 / getData(id).length);
+}
 
-export const stackedData = d3.stack().keys(data.columns.slice(1))(data);
+export const stackedData = id => {
+    return d3.stack().keys(getData(id).columns.slice(1))(getData(id));
+}
