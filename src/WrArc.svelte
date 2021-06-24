@@ -16,12 +16,29 @@
     export let arcData;
     export let index;
     export let dateIndex;
+    export let modif;
 
     let progress = tweened(INNER_RADIUS, {
-        delay: index*100,
-        duration: 1500,
+        delay: modif ? 0 : index*100,
+        duration: modif ? 0: 1500,
         easing: elasticOut
     });
+
+    let firstAppearance = true;
+
+    const updateTweened = (modification) => {
+        if(modification) {
+            $progress = INNER_RADIUS;
+        } else {
+            if(!firstAppearance) {
+                $progress = OUTER_RADIUS;
+            }
+        }
+    };
+
+    $: {
+        updateTweened(modif);
+    }
 
     $: makeArc = d3
     .arc()
@@ -40,6 +57,7 @@
 
     onMount(() => {
         $progress = OUTER_RADIUS;
+        firstAppearance = false;
     });
 
     </script>

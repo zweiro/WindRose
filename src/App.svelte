@@ -2,7 +2,17 @@
   import WindRose from './WindRose.svelte';
   import RangeSlider from "svelte-range-slider-pips";
 
-  const dates = ['04.05.2021','05.05.2021','06.05.2021'];
+  const dates = ['04.05.2021','05.05.2021','06.05.2021', 'Demo Data'];
+
+  let index = 3;
+  let modifying = false;
+
+  const updateWindValues = (value) => {
+    setTimeout(function(){
+      index = value;
+      modifying = false;
+    },1200);
+  };
 
   const numToDate = num => {
 	  return dates[num];
@@ -18,17 +28,26 @@
 	<div>
 		<h2 id="wind-title">Wind</h2>
 		<div class="wr-chart">
-		<WindRose dateIndex=3/>
+		<WindRose dateIndex={index} modif={modifying}/>
 		</div>
 	</div>
 	<div class="settings">
-		<h2>Settings</h2>
+		<h2 id="settings-title">Settings</h2>
 		<p>Select the date:</p>
-    <RangeSlider min="0" max="2" step="1" float="true" pushy="true" formatter={v => numToDate(v)}/>
+    <div id="slider">
+      <RangeSlider vertical="true" pips="true" first='label' last='label'on:start={(e) => { modifying = true }} on:stop={(e) => { updateWindValues(e.detail.value); }} min="0" max="3" step="1" float="true" formatter={v => numToDate(v)}/>
+    </div>
 	</div>
 </main>
 
 <style>
+  #settings-title {
+    margin-left: -20px;
+  }
+  #slider {
+    --range-handle-focus: #006ca6;
+    --range-range: #006BA6;
+  }
 	.settings{
 		margin-left: 40px;
 	}

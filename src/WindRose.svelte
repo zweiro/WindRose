@@ -23,7 +23,7 @@
 	} from './utils'
 	
 	export let dateIndex;
-
+	export let modif;
 	
 	let addLegend = (g) =>
 		g
@@ -128,7 +128,7 @@
 		</g>
 		<g class="rings">
 			{#each stackedData(dateIndex) as d}
-			  <WrRings data={d} dateIndex={dateIndex}/>
+			  <WrRings data={d} modif={modif} dateIndex={dateIndex}/>
 			{/each}
 		</g>
 	</g>

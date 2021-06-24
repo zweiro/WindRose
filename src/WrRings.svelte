@@ -5,12 +5,13 @@
 
     export let data;
     export let dateIndex;
+    export let modif;
 </script>
 
 
 
 <g fill="{colorScale(dateIndex)(data.key)}">
     {#each data as d, key}
-        <WrArc arcData={d} dateIndex={dateIndex} index={key}/>
+        <WrArc arcData={d} modif={modif} dateIndex={dateIndex} index={key}/>
     {/each}
 </g>

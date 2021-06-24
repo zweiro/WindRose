@@ -85,7 +85,6 @@ NW,0.0,0.0,1.0,5.0,3.0,0.0,0.0,0.0,0.0
 NNW,0.0,0.0,2.0,5.0,1.0,0.0,0.0,0.0,0.0`;
 
 let selection = [dayOne, dayTwo, dayThree, fixedData];
-let selectedData = selection[1];
 
 export const getData = id => {
     let data = Object.assign(
@@ -119,7 +118,7 @@ export const x = id => {
 export const colorScale = id => {
         return d3.scaleOrdinal()
 		.domain(getData(id).columns.slice(1))
-		.range(d3.schemeOranges[getData(id).columns.length-1]); // nr of wind velocity 'bins'
+		.range(d3.schemeBlues[getData(id).columns.length-1]); // nr of wind velocity 'bins'
 }
 
 export const getAxesAngles = id => {
