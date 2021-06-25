@@ -123,7 +123,7 @@
 	<g class="graph">
 		<g class="axes">
 			{#each getAxesAngles(dateIndex) as d}
-			  <WrAxis angle={d} dateIndex={dateIndex}/>
+			  <WrAxis angle={d}/>
 			{/each}
 		</g>
 		<g class="rings">

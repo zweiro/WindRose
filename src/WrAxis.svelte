@@ -5,7 +5,6 @@
 	} from './utils'
 
     export let angle;
-    export let dateIndex;
 
 </script>
 
